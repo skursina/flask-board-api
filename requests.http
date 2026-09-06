@@ -1,0 +1,50 @@
+@baseUrl = http://127.0.0.1:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4ODcxODA2NiwianRpIjoiZjczMzZiOTYtMDk1NC00NDJhLWFlMzgtNDYzNTg3YTRiYjAzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjMiLCJuYmYiOjE3ODg3MTgwNjYsImNzcmYiOiIzN2M3ZjgzZC04OThlLTQyYjEtYmVkMy1lMDM0YzYxNjViNmIiLCJleHAiOjE3ODg3MTg5NjZ9.AucVRUJoxvivUvFWkaAlo-xP6FNseLKJMVIUP5b7GCQ
+
+### Регистрация
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "123456"
+}
+
+### Логин
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "123456"
+}
+
+
+### Создать объявление
+POST {{baseUrl}}/ads
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Продам ноутбук",
+    "description": "RTX 4060 8GB"
+}
+
+
+### Получить объявление
+GET {{baseUrl}}/ads/2
+
+
+### Удалить объявление
+DELETE {{baseUrl}}/ads/1
+Authorization: Bearer {{token}}
+
+### Изменить объявление
+PUT {{baseUrl}}/ads/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Продам новый ноутбук",
+    "description": "RTX 4060, 32 GB RAM"
+}

@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+
+# Environment variables
+.env
+
+# Flask
+instance/
+
+# IDE
+.vscode/
+
+# pytest
+.pytest_cache/
+
+# Alembic cache
+*.log
+
