@@ -15,6 +15,23 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: flask_ads_db
+          POSTGRES_USER: flask_user
+          POSTGRES_PASSWORD: flask_password
+
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,8 +51,7 @@ jobs:
 
       - name: Run tests
         env:
-          DATABASE_URL: sqlite:///test.db
+          DATABASE_URL: postgresql://flask_user:flask_password@localhost:5432/flask_ads_db
           SECRET_KEY: test-secret-key
-
         run: |
           pytest
