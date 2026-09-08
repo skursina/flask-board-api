@@ -9,6 +9,12 @@ services:
       - .env
     depends_on:
       - postgres
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
   postgres:
     image: postgres:16
     container_name: flask_ads_postgres
