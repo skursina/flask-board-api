@@ -68,4 +68,31 @@ jobs:
 
             docker compose up -d --build
 
+            echo "Waiting for web container to become healthy..."
+
+            for i in {1..12}; do
+              STATUS=$(docker inspect --format='{{.State.Health.Status}}' flask_ads_api)
+
+              echo "Health status: $STATUS"
+
+              if [ "$STATUS" = "healthy" ]; then
+                echo "Application is healthy."
+                break
+              fi
+
+              if [ "$STATUS" = "unhealthy" ]; then
+                echo "Application is unhealthy."
+                docker compose logs --tail=50 web
+                exit 1
+              fi
+
+              sleep 5
+            done
+
+            if [ "$STATUS" != "healthy" ]; then
+              echo "Healthcheck timeout."
+              docker compose logs --tail=50 web
+              exit 1
+            fi
+
             docker compose ps
